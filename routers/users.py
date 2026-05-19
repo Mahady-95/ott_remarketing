@@ -11,7 +11,8 @@ class SubscriptionUpdate(BaseModel):
 
 class DeviceTokenUpdate(BaseModel):
     device_token: str
-
+class UserActivityUpdate(BaseModel):
+    user_id: int
 
 @router.get("/users")
 def get_users():
