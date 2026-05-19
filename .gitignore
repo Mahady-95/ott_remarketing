@@ -1,0 +1,19 @@
+# Python
+__pycache__/
+*.pyc
+
+# Virtual Environment
+venv/
+
+# Environment Variables
+.env
+
+# Firebase Credentials
+firebase_key.json
+
+# IDE
+.vscode/
+.idea/
+
+# Logs
+*.logfirebase_key.json
