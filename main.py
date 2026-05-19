@@ -1,3 +1,7 @@
+from fastapi.templating import Jinja2Templates
+from fastapi.requests import Request
+from fastapi.staticfiles import StaticFiles
+
 from fastapi import FastAPI
 
 from scheduler import start_scheduler
@@ -15,6 +19,7 @@ app = FastAPI(
     version="1.0.0"
 )
 
+
 start_scheduler()
 
 app.include_router(users_router)
@@ -24,9 +29,10 @@ app.include_router(watch_history_router)
 app.include_router(admin_router)
 app.include_router(segments_router)
 
+# templates = Jinja2Templates(directory="templates")
 
-@app.get("/")
-def home():
-    return {
-        "message": "Chorki Re-marketing API running successfully"
-    }
+# app.mount("/static", StaticFiles(directory="static"), name="static")
+
+from routers.ui import router as ui_router
+
+app.include_router(ui_router)
