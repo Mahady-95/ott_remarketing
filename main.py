@@ -12,13 +12,17 @@ from routers.dashboard import router as dashboard_router
 from routers.watch_history import router as watch_history_router
 from routers.admin import router as admin_router
 from routers.segments import router as segments_router
+from starlette.middleware.sessions import SessionMiddleware
 
 app = FastAPI(
     title="Chorki Re-marketing API",
     description="Basic OTT Re-marketing and Retention System",
     version="1.0.0"
 )
-
+app.add_middleware(
+    SessionMiddleware,
+    secret_key="chorki-secret-key"
+)
 
 start_scheduler()
 
