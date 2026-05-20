@@ -5,6 +5,7 @@ from fastapi.templating import Jinja2Templates
 
 from database import get_connection
 from firebase_service import send_push_notification
+from core.auth import require_login
 
 router = APIRouter()
 
@@ -30,11 +31,9 @@ from database import get_connection
 
 @router.get("/dashboard-ui")
 def dashboard_ui(request: Request):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    auth = require_login(request)
+    if auth:
+        return auth
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -102,11 +101,9 @@ def dashboard_ui(request: Request):
 
 @router.get("/users-ui")
 def users_ui(request: Request):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    auth = require_login(request)
+    if auth:
+        return auth
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -132,11 +129,9 @@ def users_ui(request: Request):
 
 @router.get("/campaigns-ui")
 def campaigns_ui(request: Request):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    auth = require_login(request)
+    if auth:
+        return auth
 
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
@@ -167,11 +162,9 @@ from fastapi.responses import RedirectResponse
 
 @router.get("/campaigns-create-ui")
 def campaign_create_ui(request: Request):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    auth = require_login(request)
+    if auth:
+        return auth
     return templates.TemplateResponse(
         request=request,
         name="campaign_create.html",
@@ -189,11 +182,7 @@ def create_campaign_ui(
     channel: str = Form(...),
     status: str = Form(...)
 ):
-    # if not check_admin_login(request):
-    #     return RedirectResponse(
-    #         url="/login-ui",
-    #         status_code=303
-    #     )
+   
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -215,11 +204,9 @@ def create_campaign_ui(
 
 @router.get("/campaigns-ui/{campaign_id}")
 def campaign_details_ui(request: Request, campaign_id: int):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    auth = require_login(request)
+    if auth:
+        return auth
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -269,11 +256,7 @@ def campaign_details_ui(request: Request, campaign_id: int):
     )
 @router.post("/campaigns-ui/{campaign_id}/target-segment")
 def target_segment_ui(campaign_id: int):
-    # if not check_admin_login(request):
-    #     return RedirectResponse(
-    #         url="/login-ui",
-    #         status_code=303
-    #     )
+    
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -363,11 +346,7 @@ from firebase_service import send_push_notification
 
 @router.post("/campaigns-ui/{campaign_id}/send")
 def send_campaign_ui(campaign_id: int):
-    # if not check_admin_login(request):
-    #     return RedirectResponse(
-    #         url="/login-ui",
-    #         status_code=303
-    #     )
+    
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -430,11 +409,7 @@ def send_campaign_ui(campaign_id: int):
     )
 @router.post("/campaigns-ui/{campaign_id}/retry-failed")
 def retry_failed_ui(campaign_id: int):
-    # if not check_admin_login(request):
-    #     return RedirectResponse(
-    #         url="/login-ui",
-    #         status_code=303
-    #     )
+    
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -456,11 +431,7 @@ def retry_failed_ui(campaign_id: int):
     )
 @router.post("/campaigns-ui/{campaign_id}/delete")
 def delete_campaign_ui(campaign_id: int):
-    # if not check_admin_login(request):
-    #     return RedirectResponse(
-    #         url="/login-ui",
-    #         status_code=303
-    #     )
+    
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -489,11 +460,7 @@ def update_campaign_status_ui(
     campaign_id: int,
     status: str = Form(...)
 ):
-    # if not check_admin_login(request):
-    #     return RedirectResponse(
-    #         url="/login-ui",
-    #         status_code=303
-    #     )
+    
     conn = get_connection()
     cursor = conn.cursor()
 
@@ -515,11 +482,6 @@ def update_campaign_status_ui(
 
 @router.get("/login-ui")
 def login_ui(request: Request):
-    # if not check_admin_login(request):
-    #     return RedirectResponse(
-    #         url="/login-ui",
-    #         status_code=303
-    #     )
     return templates.TemplateResponse(
         request=request,
         name="login.html",
@@ -534,11 +496,7 @@ def login_submit(
     email: str = Form(...),
     password: str = Form(...)
 ):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -572,11 +530,9 @@ def login_submit(
 
 @router.get("/logout-ui")
 def logout_ui(request: Request):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    auth = require_login(request)
+    if auth:
+        return auth
 
     request.session.clear()
 
@@ -587,11 +543,9 @@ def logout_ui(request: Request):
 
 @router.get("/users-ui/{user_id}")
 def user_details_ui(request: Request, user_id: int):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    auth = require_login(request)
+    if auth:
+        return auth
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
@@ -625,11 +579,9 @@ def user_details_ui(request: Request, user_id: int):
 
 @router.get("/campaign-logs-ui")
 def campaign_logs_ui(request: Request):
-    if not check_admin_login(request):
-        return RedirectResponse(
-            url="/login-ui",
-            status_code=303
-        )
+    auth = require_login(request)
+    if auth:
+        return auth
     conn = get_connection()
     cursor = conn.cursor(dictionary=True)
 
