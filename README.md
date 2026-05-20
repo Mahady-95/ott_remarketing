@@ -134,128 +134,141 @@ CMR_APP/
 ├── static/
 │
 └── venv/
+```
+
+---
 
 # Installation
+
 ## Clone Project
 
-- git clone https://github.com/YOUR_USERNAME/ott_remarketing.git
+```bash
+git clone https://github.com/Mahady-95/ott_remarketing.git
+```
 
-##Enter Project folder
-- cd ott_remarketing
+## Enter Project Folder
+
+```bash
+cd ott_remarketing
+```
 
 ## Create Virtual Environment
-- python -m venv venv
 
-# Activate Virtual Environment
-## Windows
-- venv\Scripts\activate
-## Linux/Mac
-- source venv/bin/activate
+```bash
+python -m venv venv
+```
+
+## Activate Virtual Environment
+
+### Windows
+
+```bash
+venv\Scripts\activate
+```
+
+### Linux/Mac
+
+```bash
+source venv/bin/activate
+```
 
 ## Install Requirements
-- pip install -r requirements.txt
+
+```bash
+pip install -r requirements.txt
+```
+
+---
 
 # Database Setup
-## Create MySQL database:
-- CREATE DATABASE chorki_remarketing;
 
-## Update database credentials in:
-- database.py
+Create MySQL database:
 
-## Example:
-- host="localhost"
+```sql
+CREATE DATABASE chorki_remarketing;
+```
+
+Update database credentials in:
+
+```text
+database.py
+```
+
+Example:
+
+```python
+host="localhost"
 user="root"
 password="YOUR_PASSWORD"
 database="chorki_remarketing"
+```
 
-## Run Server
-- uvicorn main:app --reload
+---
 
-## Server URL:
-- http://127.0.0.1:8000
+# Run Server
+
+```bash
+uvicorn main:app --reload
+```
+
+Server URL:
+
+```text
+http://127.0.0.1:8000
+```
+
+---
+
+# Admin Login
+
+Email:
+```
+admin@chorki.com
+```
+
+Password:
+```
+123456
+```
+
+---
 
 # UI Routes
 
-## | Route                | Description     |
-| -------------------- | --------------- |
-| /login-ui            | Admin login     |
-| /dashboard-ui        | Dashboard       |
-| /users-ui            | Users page      |
-| /campaigns-ui        | Campaigns page  |
+| Route | Description |
+|---|---|
+| /login-ui | Admin login |
+| /dashboard-ui | Dashboard |
+| /users-ui | Users page |
+| /campaigns-ui | Campaigns page |
 | /campaigns-create-ui | Create campaign |
-| /campaign-logs-ui    | Campaign logs   |
+| /campaign-logs-ui | Campaign logs |
 
-## Main Re-marketing Workflow
+---
 
-- Admin logs in
-- Create campaign
-- Target segment users
-- Generate campaign logs
-- Send campaign
-- Track sent/failed/clicked users
-- Retry failed users
+# Workflow
+
+1. Login
+2. Create campaign
+3. Target segment users
+4. Send campaign
+5. Track logs
+6. Retry failed users
+
+---
 
 # Scheduler
-## Background scheduler automatically:
 
-- Finds inactive users
-- Creates pending campaign logs
-- Helps automate re-marketing workflow
+- Automatically detects inactive users
+- Creates campaign logs every interval
 
-# Search Features
-## Search by:
+---
 
-- Name
-- Email
-- Phone
-
-#Campaign Search
-
-## Search by:
-
-- Campaign title
-- Segment
-- Status
-
-# Campaign Logs Search
-
-## Search by:
-
-- Campaign
-- User
-- Email
-- Phone
-- Status
-
-# Current Status
-## Completed
-- Backend API
-- Dashboard UI
-- User management
-- Campaign management
-- Logs system
-- Session login
-- Search filters
-- Scheduler
-- Firebase integration structure
-
-#Future Improvements
+# Future Improvements
 
 - Password hashing
-- Real Firebase push integration
-- Email marketing integration
-- SMS integration
-- Advanced analytics
+- Real Firebase push notifications
+- Email/SMS integration
 - Celery queue system
 - Docker deployment
 - React frontend
-- AI recommendation engine
-- A/B testing
-- Multi-admin support
-- Campaign scheduling UI
-
-# Author
-
-- Developed for OTT re-marketing learning and experimentation.
-
-- Inspired by real OTT retention systems like Netflix, and Hoichoi.
